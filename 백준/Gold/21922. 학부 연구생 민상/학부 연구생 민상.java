@@ -15,7 +15,6 @@ public class Main {
 	static int[] di = {-1, 1, 0, 0};
 	static int[] dj = {0, 0, -1, 1};
 	static int n, m, res, map[][];
-	static int[][] test;
 	static boolean[][][] v;
     public static void main(String args[]) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,7 +23,6 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
         
         map = new int[n][m];
-        test = new int[n][m];
         v = new boolean[n][m][4];
         
         res = 0;
@@ -36,7 +34,6 @@ public class Main {
         		map[i][j] = Integer.parseInt(st.nextToken());
         		if(map[i][j] == 9) {
         			res++;
-        			test[i][j] = 1;
         			q.add(new node(i, j, 0));
         	        q.add(new node(i, j, 1));
         	        q.add(new node(i, j, 2));
@@ -48,16 +45,12 @@ public class Main {
         		}
         	}
         }
-//        for(int i=0; i<n; i++) {
-//        	System.out.println(Arrays.toString(null));
-//        }
         
         while(!q.isEmpty()) {
         	node cn = q.poll();
         	
         	int ni = cn.i+di[cn.dir];
         	int nj = cn.j+dj[cn.dir];
-//        	System.out.println(cn.i+" "+cn.j+" "+ni+" "+nj+" "+cn.dir);
         	if(ni>=0 && ni<n && nj>=0 && nj<m) {
 				if(v[ni][nj][cn.dir]) continue;
 				if(!visit(ni, nj)) res++;
@@ -131,22 +124,13 @@ public class Main {
         			}
     			}
     		}
-        	
-//            for(int i=0; i<n; i++) {
-//            	System.out.println(Arrays.toString(test[i]));
-//            }
         }
-
     	System.out.println(res);
-        
     }
     private static boolean visit(int i, int j) {
     	for(int d=0; d<4; d++) {
     		if(v[i][j][d]) return true;
     	}
-    	test[i][j] = 1;
-//    	System.out.println(i+" "+j);
     	return false;
     }
-    
 }
