@@ -1,24 +1,20 @@
-const fs = require('fs');
-const input = fs.readFileSync("./dev/stdin").toString().trim().split("\n").map(v=>v.split(' ').map(Number));
-const [N,M] = input[0]
-const nums = input[1].sort((a,b)=>a-b)
-const answer = [];
-function sequence(arr,cnt){
-  if(cnt==M){
-    answer.push(arr.join(' '))
-  }else{
-    for(let i = 0; i<N; i++){
-      if(nums[i]>=arr[arr.length-1]){
-        arr.push(nums[i]);
-        sequence(arr,cnt+1)
-        arr.pop()
-      }
+let fs = require('fs');
+// let input = fs.readFileSync('./input.txt').toString().trim().split('\n');
+let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+let nm = input[0].split(" ").map(Number);
+let arr = input[1].split(" ").map(Number).sort((a,b)=>a-b);
+let ret = [];
+function solve(idx, depth, str){
+    if(depth===nm[1]){
+        ret.push(str.join(' '))
     }
-  }
+    else{
+        for(let i=idx; i<nm[0]; i++){
+            str.push(arr[i]);
+            solve(parseInt(i), parseInt(depth+1), str);
+            str.pop();
+        }
+    }
 }
-
-for(let i = 0; i<N; i++){
-  sequence([nums[i]],1);
-}
-
-console.log(answer.join('\n'))
+solve(parseInt(0), parseInt(0), []);
+console.log(ret.join('\n'));
