@@ -6,13 +6,11 @@ class Solution {
         L: for(int i=0; i<numbers.length; i++){
             String str = Long.toBinaryString(numbers[i]);
             for(int t=0; t<str.length(); t++){
-                // System.out.println("---"+("0".repeat(t))+str);
                 if((str.length()+t)%2==0){
                     continue;
                 }
                 if(check(("0".repeat(t))+str)){
                     answer[i] = 1;
-                    // System.out.println("pass" + ("0".repeat(t))+str);
                     continue L;
                 }
             }
@@ -43,7 +41,6 @@ class Solution {
             }
             idx++;
         }
-        // System.out.println("next-"+str+" "+next);
         return check(next);
     }
     
