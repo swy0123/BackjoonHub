@@ -8,21 +8,13 @@ class Solution {
             this.go = go;
             this.stay = stay;
         }
-        @Override
-        public String toString(){
-            return this.go+" "+this.stay;
-        }
     }
     static class node {
-        int idx, sales, go, stay, prev;
+        int idx, sales;
         ArrayList<Integer> nexts = new ArrayList();
         public node(int idx, int sales){
             this.idx = idx;
             this.sales = sales;
-        }
-        @Override
-        public String toString(){
-            return this.idx+" "+this.sales+" "+this.prev+" "+this.nexts.toString();
         }
     }
     static node[] arr;
@@ -39,13 +31,8 @@ class Solution {
             int from = links[i][0];
             int to = links[i][1];
             arr[from].nexts.add(to);
-            arr[to].prev = from;
         }
         value cur = postorder(1);
-        // System.out.println(cur.toString());
-        // for(int i=1; i<arr.length; i++){
-        //     System.out.println(arr[i].toString());
-        // }
         if(cur.go>cur.stay) answer = (int)cur.stay;
         else answer = (int)cur.go;
         
@@ -61,7 +48,6 @@ class Solution {
         long min = Integer.MAX_VALUE;
         boolean canStay = false;
         
-        // System.out.println(arr[root].nexts.toString());
         for(int i=0; i<arr[root].nexts.size(); i++){
             int curIdx = arr[root].nexts.get(i);
             value cur = postorder(curIdx);
@@ -70,17 +56,13 @@ class Solution {
                 stay+=cur.go;
                 canStay = true;
             }
-            else{
-                stay += cur.stay;
-            }
+            else stay += cur.stay;
             min = Math.min(min, cur.go-cur.stay);
         }
-        // System.out.println("-------"+stay);
         if(!canStay) stay += min;
         if(go>stay+arr[root].sales){ //갔을때가 안간거+자기자신 보다 안좋으면 감
             go = stay+arr[root].sales;
         }
-        // System.out.println(max+" "+go+" "+stay);
         return new value(go, stay);
     };
 }

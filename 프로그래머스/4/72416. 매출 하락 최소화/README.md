@@ -1,10 +1,10 @@
 # [level 4] 매출 하락 최소화 - 72416 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/72416) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/72416#) 
 
 ### 성능 요약
 
-메모리: 77.7 MB, 시간: 1.15 ms
+메모리: 72.2 MB, 시간: 0.43 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 18일 12:56:40
+2024년 04월 18일 12:59:59
 
 ### 문제 설명
 
