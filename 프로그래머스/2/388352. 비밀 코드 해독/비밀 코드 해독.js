@@ -3,13 +3,9 @@ let cq, cans,
 function solution(n, q, ans) {
     cq = q
     cans = ans
-    var answer = 0;
-    qq = q
     gen(n, 0, 0, [])
     return canswer;
 }
-// const setQ = (q)=> {return t}
-// const getQ = ()=> {return t}
 
 const gen = (n, idx, m, arr) =>{
     const newArr = [...arr]
@@ -32,5 +28,4 @@ const gen = (n, idx, m, arr) =>{
         newArr[idx] = i;
         gen(n, idx+1, i, newArr);
     }
-    
 }
