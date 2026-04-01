@@ -1,75 +1,60 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	static class node{
-		int i, j;
-		public node(int i, int j) {
-			this.i = i;
-			this.j = j;
-		}
-	}
-	static int[] di = {-1, 1, 0, 0};
-	static int[] dj = {0, 0, -1, 1};
-	static int n, m, map[][];
-	static boolean[][] v;
-    public static void main(String args[]) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        
-        map = new int[n][m];
-        
-        for(int i=0; i<n; i++) {
-        	st = new StringTokenizer(br.readLine());
-        	for(int j=0; j<m; j++) {
-        		map[i][j] = Integer.parseInt(st.nextToken());
-        	}
-        }
-        
-        Queue<node> q;
-        int ni, nj, time = 0;
-        int csize = cheeseSize();
-        while(cheeseSize()>0) {
-        	time++;
-        	q = new ArrayDeque<>();
-        	v = new boolean[n][m];
-        	q.add(new node(0, 0));
-        	v[0][0] = true;
-        	while(!q.isEmpty()) {
-        		node cn = q.poll();
-        		if(map[cn.i][cn.j]==1) continue;
-        		for(int d=0; d<4; d++) {
-        			ni = cn.i+di[d];
-        			nj = cn.j+dj[d];
-        			if(ni>=0 && ni<n && nj>=0 && nj<m && !v[ni][nj]) {
-        				v[ni][nj] = true;
-        				q.add(new node(ni, nj));
-        			}
-        		}
-        	}
-        	csize = cheeseSize();
-        	meltCheese();
-        }
-        System.out.println(time);
-        System.out.println(csize);
-    }
-    private static void meltCheese() {
-    	for(int i=0; i<n; i++) {
-        	for(int j=0; j<m; j++) {
-        		if(v[i][j] && map[i][j]==1) map[i][j] = 0;
-        	}
-        }
-    }
-    private static int cheeseSize() {
-    	int ret = 0;
-    	for(int i=0; i<n; i++) {
-        	for(int j=0; j<m; j++) {
-        		if(map[i][j]==1) ret++;
-        	}
-        }
-    	return ret;
+	private static int[] dy = {-1, 0, 1, 0};
+	private static int[] dx = {0, 1, 0, -1};
+	
+    public static void main(String[] args) throws Exception {
+	    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    	StringTokenizer st = new StringTokenizer(br.readLine());
+	    	
+	    	int r = Integer.parseInt(st.nextToken());
+	    	int c = Integer.parseInt(st.nextToken());
+	    	
+	    	int[][] map = new int[r][c];
+	    	
+	    	for(int i=0; i<r; i++) {
+	    		st = new StringTokenizer(br.readLine());
+	    		for(int j=0; j<c; j++) {
+	    			map[i][j] = Integer.parseInt(st.nextToken());
+	    		}
+	    	}
+	    	int time = 0;
+	    	int last = 0;
+	    	boolean[][] visited;
+	    	Queue<int[]> q = new ArrayDeque<>();
+	    	Queue<int[]> melt = new ArrayDeque<>();
+	    	int cy, cx;
+	    	while(true) {
+	    		visited = new boolean[r][c];
+	    		q.offer(new int[] {0, 0});
+	    		visited[0][0] = true;
+	    		
+	    		while(!q.isEmpty()) {
+	    			int[] cur = q.poll();
+	    			for(int d=0; d<4; d++) {
+	    				cy = cur[0] + dy[d];
+	    				cx = cur[1] + dx[d];
+	    				if(cy<0 || cy>=r || cx<0 || cx>=c || visited[cy][cx]) continue;
+	    				visited[cy][cx] = true;
+	    				if(map[cy][cx] == 1) melt.offer(new int[] {cy, cx});
+	    				else q.offer(new int[] {cy, cx});
+	    			}
+	    		}
+	    		
+	    		if(melt.isEmpty()) {
+	    			break;
+	    		}
+	    		last = melt.size();
+	    		time++;
+	    		while(!melt.isEmpty()) {
+	    			int[] cur = melt.poll();
+	    			map[cur[0]][cur[1]] = 0;
+	    		}
+	    	}
+	    	
+	    	System.out.println(time);
+	    	System.out.println(last);
     }
 }
